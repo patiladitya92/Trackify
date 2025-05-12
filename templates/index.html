@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Activity Recognition - Camera Feed</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .camera-container {
+            max-width: 800px;
+            width: 100%;
+            margin: 20px auto;
+            text-align: center;
+        }
+
+        #videoElement {
+            width: 100%;
+            max-width: 800px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        #activityDisplay {
+            margin-top: 20px;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            font-size: 1.2em;
+        }
+
+        .controls {
+            margin-top: 20px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: all 0.3s ease;
+            margin: 0 10px;
+        }
+
+        .start-btn {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .stop-btn {
+            background: #f44336;
+            color: white;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="camera-container">
+        <img id="videoElement" src="{{ url_for('video_feed') }}" alt="Camera Feed">
+        <div id="activityDisplay">Initializing...</div>
+        <div class="controls">
+            <button class="btn start-btn" onclick="startCamera()">Start Camera</button>
+            <button class="btn stop-btn" onclick="stopCamera()">Stop Camera</button>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+    <script>
+        const socket = io();
+        let isVideoPlaying = false;
+
+        function startCamera() {
+            fetch('/start_camera')
+                .then(response => {
+                    document.getElementById('videoElement').style.display = 'block';
+                    isVideoPlaying = true;
+                });
+        }
+
+        function stopCamera() {
+            fetch('/stop_camera')
+                .then(response => {
+                    document.getElementById('videoElement').style.display = 'none';
+                    document.getElementById('activityDisplay').textContent = 'Camera stopped';
+                    isVideoPlaying = false;
+                });
+        }
+
+        // Handle real-time activity updates
+        socket.on('activity_update', function(data) {
+            if (isVideoPlaying) {
+                document.getElementById('activityDisplay').textContent = 'Current Activity: ' + data.activity;
+            }
+        });
+
+        // Start camera automatically when page loads
+        window.onload = function() {
+            startCamera();
+        };
+    </script>
+</body>
+</html>
