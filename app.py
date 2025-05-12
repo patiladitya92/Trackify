@@ -96,6 +96,10 @@ camera = None
 def landing():
     return render_template('landing.html')
 
+@app.route('/api')
+def api():
+    return render_template('landing.html')
+
 # Route for home page
 @app.route('/home')
 def home():
