@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - Activity Recognition</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            background: #f5f5f5;
+        }
+
+        nav {
+            width: 100%;
+            height: 80px;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 50px;
+            background: rgba(0, 0, 0, 0.8);
+            position: fixed;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 2em;
+            letter-spacing: 2px;
+            font-weight: bold;
+        }
+
+        .menu {
+            display: flex;
+            gap: 20px;
+        }
+
+        .menu a {
+            text-decoration: none;
+            color: white;
+            padding: 10px 15px;
+            font-size: 18px;
+            transition: all 0.3s ease;
+        }
+
+        .menu a:hover {
+            color: #ff6b6b;
+        }
+
+        .main-content {
+            padding: 120px 50px 50px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .welcome-section {
+            text-align: center;
+            margin-bottom: 50px;
+            padding: 40px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .welcome-section h1 {
+            font-size: 2.5em;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .welcome-section p {
+            color: #666;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .stat-card h3 {
+            font-size: 1.8em;
+            color: #ff6b6b;
+            margin-bottom: 10px;
+        }
+
+        .stat-card p {
+            color: #666;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-title h2 {
+            font-size: 2.5em;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .feature-card i {
+            font-size: 2.5em;
+            color: #ff6b6b;
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5em;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .feature-card p {
+            color: #666;
+        }
+
+        .about {
+            padding: 50px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin: 50px 0;
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: start;
+        }
+
+        .about-text h3 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+
+        .about-text p {
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .activities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin: 50px 0;
+        }
+
+        .activity-card {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .activity-card h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .activity-card p {
+            color: #666;
+        }
+
+        .cta-section {
+            text-align: center;
+            margin-top: 50px;
+            padding: 50px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 15px 30px;
+            background: #ff6b6b;
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-size: 1.1em;
+            transition: all 0.3s ease;
+            border: 2px solid #ff6b6b;
+        }
+
+        .cta-button:hover {
+            background: transparent;
+            color: #ff6b6b;
+        }
+
+        @media (max-width: 768px) {
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="logo">TrackiFy</div>
+        <div class="menu">
+            <a href="{{ url_for('landing') }}">Main</a>
+            <a href="{{ url_for('home') }}">Home</a>
+            <a href="{{ url_for('services') }}">Services</a>
+            <a href="{{ url_for('contact') }}">Contact</a>
+        </div>
+    </nav>
+
+    <div class="main-content">
+        <section class="welcome-section">
+            <h1>Welcome to Activity Recognition</h1>
+            <p>Explore our advanced human activity recognition system and discover its capabilities.</p>
+        </section>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h3>5+</h3>
+                <p>Detectable Activities</p>
+            </div>
+            <div class="stat-card">
+                <h3>Real-time</h3>
+                <p>Processing Speed</p>
+            </div>
+            <div class="stat-card">
+                <h3>80%+</h3>
+                <p>Detection Accuracy</p>
+            </div>
+        </div>
+
+        <section class="features-grid">
+            <div class="feature-card">
+                <i>🎥</i>
+                <h3>Real-time Recognition</h3>
+                <p>Instantly detect and classify human activities using your webcam or uploaded videos.</p>
+            </div>
+            <div class="feature-card">
+                <i>🤸</i>
+                <h3>Multiple Activities</h3>
+                <p>Accurately recognize various activities including walking, running, jumping, and more.</p>
+            </div>
+            <div class="feature-card">
+                <i>📊</i>
+                <h3>Motion Analysis</h3>
+                <p>Advanced motion detection and analysis for accurate activity classification.</p>
+            </div>
+        </section>
+
+        <section class="about">
+            <div class="section-title">
+                <h2>How It Works</h2>
+            </div>
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>Technical Process</h3>
+                    <p>1. <strong>Motion Detection:</strong> The system analyzes frame-by-frame motion patterns to detect movement intensity.</p>
+                    <p>2. <strong>Pose Estimation:</strong> Using MediaPipe, we track key body points to understand posture and movement.</p>
+                    <p>3. <strong>Activity Classification:</strong> Based on motion patterns and pose data, the system classifies the activity.</p>
+                    <p>4. <strong>Real-time Feedback:</strong> Results are displayed instantly, showing the detected activity and confidence level.</p>
+                </div>
+                <div class="about-text">
+                    <h3>Applications</h3>
+                    <p>• Sports and fitness tracking</p>
+                    <p>• Healthcare monitoring</p>
+                    <p>• Security surveillance</p>
+                    <p>• Human behavior analysis</p>
+                    <p>• Research and development</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="section-title">
+                <h2>Detectable Activities</h2>
+            </div>
+            <div class="activities-grid">
+                <div class="activity-card">
+                    <h3>Walking</h3>
+                    <p>Detection of normal walking patterns</p>
+                </div>
+                <div class="activity-card">
+                    <h3>Running</h3>
+                    <p>Recognition of running movements</p>
+                </div>
+                <div class="activity-card">
+                    <h3>Jumping</h3>
+                    <p>Detection of jumping activities</p>
+                </div>
+                <div class="activity-card">
+                    <h3>Standing</h3>
+                    <p>Recognition of standing posture</p>
+                </div>
+                <div class="activity-card">
+                    <h3>Sitting</h3>
+                    <p>Detection of sitting position</p>
+                </div>
+                <div class="activity-card">
+                    <h3>Dancing</h3>
+                    <p>Recognition of dance movements</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta-section">
+            <h2>Ready to Try?</h2>
+            <p>Experience our activity recognition system in action.</p>
+            <br>
+            <a href="{{ url_for('input') }}" class="cta-button">Start Recognition</a>
+        </section>
+    </div>
+</body>
+</html> 
