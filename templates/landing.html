@@ -54,21 +54,10 @@
             color: #ff6b6b;
         }
 
-        .hero {
-            height: 100vh;
-            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('/background.jpg');
-            background-size: cover;
-            background-position: center;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            color: white;
-            padding: 0 20px;
-        }
-
         .hero-content {
             max-width: 800px;
+            color: white;
+            text-align: center;
         }
 
         .hero h1 {
@@ -110,7 +99,11 @@
         </div>
     </nav>
 
-    <section class="hero">
+    <!-- Apply the background directly in the section tag -->
+    <section class="hero" style="height: 100vh; display: flex; align-items: center; justify-content: center; padding: 0 20px;
+        background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+        url('{{ url_for('static', filename='images/background.jpg') }}');
+        background-size: cover; background-position: center;">
         <div class="hero-content">
             <h1>Human Activity Recognition System</h1>
             <p>Advanced AI-powered system that recognizes and analyzes human activities in real-time using computer vision and motion analysis.</p>
@@ -118,4 +111,4 @@
         </div>
     </section>
 </body>
-</html> 
+</html>
