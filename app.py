@@ -7,7 +7,7 @@ import base64
 from PIL import Image
 import io
 import os
-from werkzeug.utils import secure_filename
+from urllib.parse import quote as url_quote
 
 app = Flask(__name__)
 socketio = SocketIO(app)
